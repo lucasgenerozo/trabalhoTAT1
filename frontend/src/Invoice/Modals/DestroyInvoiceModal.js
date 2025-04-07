@@ -1,6 +1,16 @@
 import { Button, Modal } from "react-bootstrap";
+import api from '../../utils/api';
 
-function DestroyInvoiceModal ({ show, hideDestroyInvoiceModal }) {
+function DestroyInvoiceModal ({ show, hideDestroyInvoiceModal, invoice, callback }) {
+
+    const sendForm = async () => {
+        try {
+            await api.delete(`/invoices/${invoice.id}`);
+            callback();
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     return (
         <Modal
@@ -18,7 +28,7 @@ function DestroyInvoiceModal ({ show, hideDestroyInvoiceModal }) {
                 <Button variant="secondary" onClick={hideDestroyInvoiceModal}>
                 Cancelar
                 </Button>
-                <Button variant="primary">Confirmar</Button>
+                <Button variant="primary" onClick={sendForm}>Confirmar</Button>
             </Modal.Footer>
     </Modal>
     );

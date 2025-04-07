@@ -4,7 +4,7 @@ import { Pencil, ThreeDots, XCircle } from "react-bootstrap-icons";
 import DestroyInvoiceModal from "./Modals/DestroyInvoiceModal";
 import UpdateInvoiceModal from "./Modals/UpdateInvoiceModal";
 
-function InvoiceListMenu({invoice}) {
+function InvoiceListMenu({ invoice, callback }) {
 
   const [showDestroy, setShowDestroy] = useState(false);
   const [showUpdate, setshowUpdete] = useState(false);
@@ -35,8 +35,15 @@ function InvoiceListMenu({invoice}) {
         </Dropdown.Menu>
       </Dropdown>
 
-      <DestroyInvoiceModal show={showDestroy} hideDestroyInvoiceModal={toggleDestroyInvoiceModal} />
-      <UpdateInvoiceModal show={showUpdate} hideUpdateInvoiceModal={toggleUpdateInvoiceModal} invoice={invoice} />
+      <DestroyInvoiceModal show={showDestroy} 
+                           hideDestroyInvoiceModal={toggleDestroyInvoiceModal} 
+                           invoice={invoice} 
+                           callback={callback} />
+
+      <UpdateInvoiceModal show={showUpdate} 
+                          hideUpdateInvoiceModal={toggleUpdateInvoiceModal} 
+                          invoice={invoice} 
+                          callback={callback} />
     </>
   );
 }

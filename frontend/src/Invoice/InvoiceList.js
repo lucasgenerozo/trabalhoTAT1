@@ -1,6 +1,6 @@
 import InvoiceListMenu from "./InvoiceListMenu";
 
-function InvoicesList({ invoices }) {
+function InvoicesList({ invoices, callback }) {
   return invoices.map(invoice => (
         <tr key={invoice.id}>
             <td>{invoice.id}</td>
@@ -8,7 +8,7 @@ function InvoicesList({ invoices }) {
             <td>{invoice.description}</td>
             <td>{invoice.value}</td>
             <td>
-                <InvoiceListMenu invoice={invoice} />
+                <InvoiceListMenu invoice={invoice} callback={callback} />
             </td>
         </tr>
     ));

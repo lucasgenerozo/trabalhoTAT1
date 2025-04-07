@@ -58,7 +58,7 @@ function App() {
             { 
               (invoices == null)
               ? <EmptyInvoicesMessage />  
-              : <InvoicesList invoices={invoices} />
+              : <InvoicesList invoices={invoices} callback={getInvoices} />
             }
           </tbody>
         </Table>

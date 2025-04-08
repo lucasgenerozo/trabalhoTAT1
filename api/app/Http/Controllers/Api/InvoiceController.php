@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\InvoiceResource;
 use App\Models\Invoice;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        return new JsonResponse(Invoice::all());
+        return InvoiceResource::collection(Invoice::all());
     }
 
     /**
@@ -32,7 +33,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        return new JsonResponse($invoice->toArray());
+        return new InvoiceResource($invoice->toArray());
     }
 
     /**

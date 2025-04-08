@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('type', ['C', 'D']);
             $table->string('description');
-            $table->double('value');
+            $table->double('amount');
             $table->timestamps();
         });
     }

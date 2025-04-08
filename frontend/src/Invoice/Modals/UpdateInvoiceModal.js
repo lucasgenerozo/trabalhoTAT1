@@ -1,15 +1,39 @@
-import { Button, Modal } from "react-bootstrap";
-import InvoiceForm from "../InvoiceForm";
+import { Modal } from "react-bootstrap";
 import api from '../../utils/api';
+import InvoiceForm from "../InvoiceForm";
+import { useState } from "react";
 
-function UpdateInvoiceModal ({ show, hideUpdateInvoiceModal, callback, invoice }) {
+function UpdateInvoiceModal ({ show, hideUpdateInvoiceModal, callback, invoiceJSON }) {
 
-    const sendForm = async () => {
+    const [invoice, setInvoice] = useState({
+        id: invoiceJSON.id,
+        type: invoiceJSON.type,
+        description: invoiceJSON.description,
+        amount: invoiceJSON.amount
+    });
+
+    const handleClick = () => {
+        hideUpdateInvoiceModal();
+    }
+
+    const  handleChange = (e) => {
+        const { name, value } = e.target;
+        setInvoice(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         try {
-            await api.put(`/invoices/${invoice.id}`)
-            callback();
+            await api.put(`/invoices/${invoice.id}`, invoice);
         } catch (e) {
             console.log(e);
+        } finally {
+            callback();
+            hideUpdateInvoiceModal();
         }
     }
 
@@ -23,14 +47,12 @@ function UpdateInvoiceModal ({ show, hideUpdateInvoiceModal, callback, invoice }
                 <Modal.Title>Alterar registro financeiro</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <InvoiceForm id="formUpdate" invoice={invoice} />
+                <InvoiceForm invoice={invoice} 
+                             handleChange={handleChange}
+                             handleSubmit={handleSubmit} 
+                             handleClick={handleClick}
+                />
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={hideUpdateInvoiceModal}>
-                Cancelar
-                </Button>
-                <Button variant="primary" onClick={sendForm}>Gravar</Button>
-            </Modal.Footer>
         </Modal>
     );
 }

@@ -12,6 +12,11 @@ class Invoice extends Model
     protected $fillable = [
         'type',
         'description',
-        'value'
+        'amount'
     ];
+
+    public function typeText(): string
+    {
+        return ($this->type == 'C' ? 'Entrada' : 'Saída');
+    }
 }

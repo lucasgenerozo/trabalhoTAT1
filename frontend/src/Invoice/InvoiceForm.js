@@ -1,37 +1,29 @@
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
-function InvoiceForm({ invoice }) {
-
-    let initialId   = '';
-    let initialType = '';
-    let initialDescription = '';
-    let initialValue = '';
-
-    if (invoice != null) {
-        initialId   = invoice.id;
-        initialType = invoice.type;
-        initialDescription = invoice.description;
-        initialValue = invoice.value;
-    }
+function InvoiceForm({ invoice, handleChange, handleSubmit, handleClick }) {
 
     return (
-        <Form>
-            <input type="hidden" id="id" name="id" defaultValue={initialId} />
+        <Form onSubmit={handleSubmit} autoComplete="false">
             <Form.Group className="mb-3">
                 <Form.Label>Digite o tipo da movimentação: </Form.Label>
-                <Form.Select id="type" name="type" defaultValue={initialType}>
-                    <option defaultChecked value="C">Entrada</option>
-                    <option value="C">Saída</option>
+                <Form.Select id="type" name="type" value={invoice.type} onChange={handleChange} required>
+                    <option value="">Selecione...</option>
+                    <option value="D">Saída</option>
+                    <option value="C">Entrada</option>
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Digite a descrição da movimentação: </Form.Label>
-                <Form.Control id="description" name="description" defaultValue={initialDescription} required/>
+                <Form.Control id="description" name="description" value={invoice.description} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Digite o valor: </Form.Label>
-                <Form.Control type="number" id="value" name="value" defaultValue={initialValue} required/>
+                <Form.Control type="number" id="amount" name="amount" value={invoice.amount} onChange={handleChange} required/>
             </Form.Group>
+            <div className="d-flex justify-content-end">
+                <Button variant="secondary" type="reset" className="me-3" onClick={handleClick}>Cancelar</Button>
+                <Button variant="primary" type="submit">Gravar</Button>
+            </div>
         </Form>
     );
 }

@@ -42,7 +42,7 @@ function InvoiceListMenu({ invoice, callback }) {
 
       <UpdateInvoiceModal show={showUpdate} 
                           hideUpdateInvoiceModal={toggleUpdateInvoiceModal} 
-                          invoice={invoice} 
+                          invoiceJSON={invoice} 
                           callback={callback} />
     </>
   );

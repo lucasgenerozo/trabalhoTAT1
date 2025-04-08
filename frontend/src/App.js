@@ -1,20 +1,23 @@
 import './App.css';
-import { Button, Container, Spinner, Table } from 'react-bootstrap';
+import { Button, Container, Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import InvoicesList from './Invoice/InvoiceList';
 import CreateInvoiceModal from './Invoice/Modals/CreateInvoiceModal';
 import api from './utils/api';
+import Loading from './Components/Loading';
 
 function App() {
 
-  let [invoices, setInvoices] = useState(null);
-  let [loading, setLoading] = useState(true);
+  const [invoices, setInvoices] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [balance, setBalance] = useState(0);
 
   const getInvoices = async () => {
     try {
       const invoicesData = await api.get('/invoices');
       setLoading(true);
-      setInvoices(invoicesData.data);
+      setBalance(invoicesData.data.balance)
+      setInvoices(invoicesData.data.data); // data do atributo do js e data do retorno
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -33,12 +36,10 @@ function App() {
     </tr>
   );
 
-  const Loading = () => (
+  const LoadingRow = () => (
     <tr>
       <td colSpan={5}>
-        <div className='w-100 d-flex justify-content-center align-content-center'>
-          <Spinner />
-        </div>
+        <Loading />
       </td>
     </tr>
   );
@@ -48,13 +49,17 @@ function App() {
   const toggleCreateInvoiceModal = () => setShowCreate(!showCreate);
 
   return (
-      <Container className='App my-5 mx-auto w-75'>
+      <Container className='App pt-5 my-5 mx-auto w-75'>
         <div className='d-flex flex-row justify-content-between'>
-          <h1 className='mb-5'>Controle financeiro pessoal</h1>
+          <h1 className='mb-5 fs-2'>Controle financeiro pessoal</h1>
           <span>
             <Button variant='primary' onClick={toggleCreateInvoiceModal}>Novo registro</Button>
           </span>
         </div>
+        <h2 className='my-3 fs-5'>
+          Saldo:&nbsp;
+          <span className={`text-${balance > 0 ? 'success' : 'danger'}`}>R${balance}</span>
+        </h2>
         <Table hover bordered>
           <thead>
             <tr>
@@ -68,7 +73,7 @@ function App() {
           <tbody>
             { 
               loading
-              ? <Loading />
+              ? <LoadingRow />
               : (
                 invoices === null || invoices.length === 0
                 ? <EmptyInvoicesMessage />  

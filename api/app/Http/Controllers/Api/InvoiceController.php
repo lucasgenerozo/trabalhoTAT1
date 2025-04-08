@@ -15,7 +15,10 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        return InvoiceResource::collection(Invoice::all());
+        return InvoiceResource::collection(Invoice::all())
+                              ->additional([
+                                'balance' => Invoice::getBalance(),
+                              ]);
     }
 
     /**

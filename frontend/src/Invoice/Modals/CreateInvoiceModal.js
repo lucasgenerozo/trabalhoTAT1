@@ -1,6 +1,6 @@
 import { Modal } from "react-bootstrap";
 import api from '../../utils/api';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InvoiceForm from "../InvoiceForm";
 
 function CreateInvoiceModal ({ show, hideCreateInvoiceModel, callback }) {
@@ -12,6 +12,14 @@ function CreateInvoiceModal ({ show, hideCreateInvoiceModel, callback }) {
     };
 
     const [invoice, setInvoice] = useState(initialInvoice);
+
+    useEffect(() => {
+        setInvoice({
+            type: '',
+            description: '',
+            amount: ''
+        });
+    }, [show]);
 
     const handleClick = () => {
         setInvoice(initialInvoice);     

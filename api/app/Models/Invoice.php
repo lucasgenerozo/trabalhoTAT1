@@ -19,4 +19,12 @@ class Invoice extends Model
     {
         return ($this->type == 'C' ? 'Entrada' : 'Saída');
     }
+
+    public static function getBalance(): float
+    {
+        $totalC = self::where('type', 'C')->sum('amount');
+        $totalD = self::where('type', 'D')->sum('amount');
+
+        return $totalC - $totalD;
+    }
 }

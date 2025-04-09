@@ -18,7 +18,7 @@ class InvoiceController extends Controller
 {
     /**
      * @OA\Get(
-     *      path="/invoices",
+     *      path="/api/invoices",
      *      @OA\Response(
      *          response=200,
      *          description="OK",
@@ -39,7 +39,7 @@ class InvoiceController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/invoices",
+     *      path="/api/invoices",
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *               mediaType="application/json",
@@ -74,15 +74,65 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *      path="/api/invoices/{id}",
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          description="ID do registro",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/json"
+     *          )
+     *      )
+     * )
+     *
      */
     public function show(Invoice $invoice)
     {
-        return new InvoiceResource($invoice->toArray());
+        return new InvoiceResource($invoice);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *      path="/api/invoices/{id}",
+     *      @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID do registro",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *               mediaType="application/json",
+     *               @OA\Schema(
+     *                  @OA\Property(
+     *                      property="type",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="amount",
+     *                      type="double",
+     *                  )
+     *               )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="OK"
+     *      )
+     * )
+     *
      */
     public function update(Invoice $invoice, Request $request)
     {
@@ -91,7 +141,24 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *      path="/api/invoices/{id}",
+     *      @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID do registro",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/json"
+     *          )
+     *      )
+     * )
+     *
      */
     public function destroy(Invoice $invoice)
     {

@@ -8,10 +8,26 @@ use App\Models\Invoice;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Info(
+ *     version="1.0",
+ *     title="Invoices"
+ * )
+ */
 class InvoiceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *      path="/invoices",
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/json"
+     *          )
+     *      )
+     * )
+     *
      */
     public function index()
     {
@@ -22,7 +38,33 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *      path="/invoices",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *               mediaType="application/json",
+     *               @OA\Schema(
+     *                  @OA\Property(
+     *                      property="type",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="amount",
+     *                      type="double",
+     *                  )
+     *               )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="OK"
+     *      )
+     * )
+     *
      */
     public function store(Request $request)
     {

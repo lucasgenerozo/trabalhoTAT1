@@ -3,4 +3,4 @@
 ## Todo
 
 ### Backend
-- [ ] DOcumentar endpoints
+- [X] Documentar endpoints

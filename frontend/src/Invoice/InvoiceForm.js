@@ -3,13 +3,13 @@ import { Button, Form } from "react-bootstrap";
 function InvoiceForm({ invoice, handleChange, handleSubmit, handleClick }) {
 
     return (
-        <Form onSubmit={handleSubmit} autoComplete="false">
+        <Form onSubmit={handleSubmit} autoComplete="off">
             <Form.Group className="mb-3">
                 <Form.Label>Digite o tipo da movimentação: </Form.Label>
                 <Form.Select id="type" name="type" value={invoice.type} onChange={handleChange} required>
                     <option value="">Selecione...</option>
-                    <option value="D">Saída</option>
                     <option value="C">Entrada</option>
+                    <option value="D">Saída</option>
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
